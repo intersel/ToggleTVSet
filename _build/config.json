@@ -1,0 +1,50 @@
+{
+  "name": "ToggleTVSet",
+  "lowCaseName": "toggletvset",
+  "description": "Toggle the visibility of template variables sets by the value of a template variable",
+  "author": "pepebe/Jako",
+  "version": "1.0.0",
+  "package": {
+    "elements": {
+      "plugins": [
+        {
+          "name": "ToggleTVSet",
+          "file": "toggletvset.plugin.php",
+          "events": [
+            "OnDocFormPreRender"
+          ]
+        }
+      ],
+      "snippets": [
+        {
+          "name": "getTVLabel",
+          "file": "gettvlabel.snippet.php",
+          "description": "Output filter that retrieves the label of a corresponding TV value."
+        },
+        {
+          "name": "getTVNames",
+          "file": "gettvlabel.snippet.php",
+          "description": "Output filter to retrieve names of TVs from a list of TV IDs."
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "debug",
+        "area": "site",
+        "type": "combo-boolean",
+        "value": "0"
+      },
+      {
+        "key": "toggletvs",
+        "area": "site",
+        "value": ""
+      }
+    ]
+  },
+  "build": {
+    "readme": "docs/readme.txt",
+    "license": "docs/license.txt",
+    "changelog": "docs/changelog.txt"
+  }
+}

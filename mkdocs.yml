@@ -1,0 +1,13 @@
+site_name: ToggleTVSet
+docs_dir: core/components/toggletvset/docs
+site_dir: _build/site
+
+repo_url: https://github.com/Jako/ToggleTVSet
+
+pages:
+- [index.md, Home]
+- [contributors.md, Contributors]
+
+theme: flatly
+
+markdown_extensions: [footnotes,tables]
