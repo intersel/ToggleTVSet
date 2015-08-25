@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="./img/favicon.ico">
+
+	<title>ToggleTVSet</title>
+
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+        <link href="./css/base.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href=".">ToggleTVSet</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li class="active">
+                    <a href=".">Home</a>
+                </li>
+            
+            
+            
+                <li >
+                    <a href="contributors/">Contributors</a>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class="disabled">
+                    <a rel="next" >
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="contributors/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/Jako/ToggleTVSet">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#toggletvset">ToggleTVSet</a></li>
+        
+            <li><a href="#features">Features</a></li>
+        
+            <li><a href="#use-cases">Use Cases</a></li>
+        
+            <li><a href="#example-setup">Example Setup</a></li>
+        
+            <li><a href="#output-filter">Output Filter</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="toggletvset">ToggleTVSet</h1>
+<p>Toggle the visibility of template variables sets by the value of a template
+variable.</p>
+<h2 id="features">Features</h2>
+<p>See this <a href="http://quick.as/dvdkfjwo">ToggleTVSet quickcast</a> for a short 
+introduction.</p>
+<h2 id="use-cases">Use Cases</h2>
+<p>In one of your templates you want to be able to select one of four different
+headers. Each type of header needs one or more TVs but you only want to show
+the TVs needed for the selected type of header. Inside your template you want
+to use different chunks for templating.</p>
+<h2 id="example-setup">Example Setup</h2>
+<p>You have four different headers (Simple, Jumbotron, Carousel, Cover). For each
+one of them you use different TVs.</p>
+<h3 id="step-1-install-toggletvset">Step 1 - Install ToggleTVSet</h3>
+<p>Locate and install the extra package with the MODX package manager.</p>
+<h3 id="step-2-create-your-header-tvs">Step 2 - Create your header TVs</h3>
+<h4 id="simple-header-tv">Simple Header TV</h4>
+<ul>
+<li>Header_Headline (6) - a simple Text TV</li>
+</ul>
+<h4 id="jumbotron-tvs">Jumbotron TVs</h4>
+<ul>
+<li>Jumbotron_Background_Color (7) - Colorpicker TV</li>
+<li>Jumbotron_Background_Image (8) - Image TV</li>
+<li>Jumbotron_RTE (9) - Richtext TV</li>
+</ul>
+<h4 id="carousel-tvs">Carousel TVs</h4>
+<ul>
+<li>Carousel_Gallery (10) - MIGX TV</li>
+</ul>
+<h4 id="cover-tvs">Cover TVs</h4>
+<ul>
+<li>Cover_Background_Image (11) - Image TV</li>
+<li>Cover_RTE (12) - Richtext TV</li>
+</ul>
+<h4 id="header-select-tv">Header Select TV</h4>
+<p>Header (13) - Single Select TV</p>
+<ul>
+<li>Input Option Values: <code>Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12</code></li>
+<li>Allow Blank: <code>false</code></li>
+<li>Default: <code>4</code></li>
+<li>Enable typeahead: <code>false</code></li>
+</ul>
+<p>Give each input option a label and add the ids of the TVs used as comma
+separated values.</p>
+<p><strong> Note:</strong>  Be careful not to add empty spaces inside the value!</p>
+<pre><code>Bad: &quot;Standard==6||Jumbotron== 7 , 8, 9 ||Carousel==10||Cover==11,12&quot;
+Good: &quot;Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12&quot;
+</code></pre>
+
+<h3 id="step-3-fill-the-modx-system-setting">Step 3 - Fill the MODX system setting</h3>
+<p>Locate the <code>toggletvset.toggletvs</code> MODX system setting and fill it with the ID
+of the Header Select TV.</p>
+<p><strong> Note </strong>: The ID numbers of the template variables in the example ar just for
+demonstation and should be different in your installation.</p>
+<h2 id="output-filter">Output Filter</h2>
+<h3 id="gettvlabel">getTVLabel</h3>
+<p>This output filter retrieves the label of a corresponding TV value.</p>
+<p>If you have a selectTV with these input options</p>
+<pre><code>Standard==4||Carousel==8||Cover==9,10||Jumbotron==5,6,7
+</code></pre>
+
+<p>you could use the following call i.e. in the template</p>
+<pre><code>[[$[[*selectTV:getTVLabel]]]]
+</code></pre>
+
+<p>This will be replaced by the MODX parser to i.e.
+<code>[[$Standard]]</code> if the value of <code>[[*selectTV]]</code> is <code>4</code>.</p>
+<p>If you are working in getResources/pdoResources, etc. and your TV is prefixed, 
+use it like this:</p>
+<pre><code>[[+tv.selectTV:getTVNames=`tv.`]]
+</code></pre>
+
+<h3 id="gettvnames">getTVNames</h3>
+<p>This output filter retrieve names of TVs from a list of TV ids. You could get
+the TV names of the corresponding TV value with it.</p>
+<p>Example usage:</p>
+<pre><code>&amp;includeTVs=`[[*selectTV:getTVNames]]`
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
+        </footer>
+
+        <script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script>
+        <script src="./js/base.js"></script>
+    </body>
+</html>
