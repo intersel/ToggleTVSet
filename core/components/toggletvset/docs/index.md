@@ -5,8 +5,10 @@ variable.
 
 ##Features
 
-See this [ToggleTVSet quickcast](http://quick.as/dvdkfjwo) for a short 
+See this [quickcast](http://quick.as/dvdkfjwo) for a short 
 introduction.
+
+<iframe name="quickcast" src="http://quick.as/embed/dvdkfjwo" scrolling="no" frameborder="0" width="100%" allowfullscreen></iframe><script src="http://quick.as/embed/script/1.57"></script>
 
 ##Use Cases
 

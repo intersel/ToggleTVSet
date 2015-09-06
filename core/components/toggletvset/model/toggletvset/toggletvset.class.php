@@ -27,7 +27,7 @@ class ToggleTVSet
      * The version
      * @var string $version
      */
-    public $version = '1.0.0';
+    public $version = '1.1.0';
 
     /**
      * The class options
@@ -72,11 +72,52 @@ class ToggleTVSet
         ), $options);
 
         // set default options
-        $toggleTvs = $this->getOption('toggletvs');
+        $toggletvs = $this->getOption('toggletvs');
         $this->options = array_merge($this->options, array(
             'debug' => (boolean)$this->getOption('debug'),
-            'toggletvs' => ($toggleTvs) ? array_map('trim', explode(',', $toggleTvs)) : array()
+            'toggletvs' => ($toggletvs) ? array_map('trim', explode(',', $toggletvs)) : array()
         ));
+
+        $hidetvs = array();
+        $showtvs = array();
+
+        foreach ($this->options['toggletvs'] as $toggletv) {
+            $toggletv = intval($toggletv);
+            $tv = $this->modx->getObject('modTemplateVar', $toggletv);
+
+            if ($tv) {
+                $elements = $tv->get('elements');
+                $elements = explode('||', $elements);
+
+                foreach ($elements as $element) {
+                    $element = explode('==', $element);
+                    if (isset($element[1])) {
+                        $hidetvs = array_merge($hidetvs, array_map('trim', explode(',', $element[1])));
+                    }
+                }
+                $hidetvs = array_unique($hidetvs);
+                if ($this->modx->resource) {
+                    $tvr = $modx->getObject('modTemplateVarResource', array(
+                        'tmplvarid' => $toggletv,
+                        'contentid' => $this->modx->resource->get('id')
+                    ));
+                    if ($tvr) {
+                        $tvvalue = $tvr->get('value');
+                    }
+                    else {
+                        $tv = $modx->getObject('modTemplateVar', $toggletv);
+                        $tvvalue = ($tv) ? $tv->get('default_text') : '';
+                    }
+                    if ($tvvalue) {
+                        $showtvs = array_merge($showtvs, array_map('trim', explode(',', $tvvalue)));
+                    }
+                }
+                $showtvs = array_unique($showtvs);
+            }
+        }
+
+        $this->options['hideTVs'] = $hidetvs;
+        $this->options['showTVs'] = $showtvs;
 
         $this->modx->lexicon->load($this->namespace . ':default');
     }
@@ -113,7 +154,9 @@ class ToggleTVSet
         $this->modx->regClientStartupHTMLBlock('<script type="text/javascript">' .
             'var ToggleTVSet = {"options": ' . json_encode(array(
                 'debug' => $this->getOption('debug'),
-                'toggletvs' => $this->getOption('toggletvs')
+                'toggletvs' => $this->getOption('toggletvs'),
+                'hideTVs' => $this->getOption('hideTVs'),
+                'showTVs' => $this->getOption('showTVs')
             )) . '};' . '</script>');
         $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.js?v=v' . $this->version);
     }

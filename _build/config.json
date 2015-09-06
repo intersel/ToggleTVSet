@@ -3,7 +3,7 @@
   "lowCaseName": "toggletvset",
   "description": "Toggle the visibility of template variables sets by the value of a template variable",
   "author": "pepebe/Jako",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "package": {
     "elements": {
       "plugins": [
@@ -23,8 +23,8 @@
         },
         {
           "name": "getTVNames",
-          "file": "gettvlabel.snippet.php",
-          "description": "Output filter to retrieve names of TVs from a list of TV IDs."
+          "file": "gettvnames.snippet.php",
+          "description": "Output filter that retrieves the names of TVs from a list of TV IDs."
         }
       ]
     },
