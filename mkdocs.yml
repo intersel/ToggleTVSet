@@ -5,9 +5,11 @@ site_dir: _build/site
 repo_url: https://github.com/Jako/ToggleTVSet
 
 pages:
-- [index.md, Home]
-- [contributors.md, Contributors]
+- Home: 'index.md'
+- Contributors: 'contributors.md'
 
 theme: flatly
 
-markdown_extensions: [footnotes,tables]
+markdown_extensions:
+    - footnotes
+    - tables

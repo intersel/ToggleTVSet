@@ -17,6 +17,11 @@ headers. Each type of header needs one or more TVs but you only want to show
 the TVs needed for the selected type of header. Inside your template you want
 to use different chunks for templating.
 
+** Note **: Please don't misuse this extra and assign all TVs to all 
+templates and hide them by the default value of a toggling TV. This could cause
+speed problems in the frontend because the template variable handling is not 
+that effective i.e. in the getResources snippet.
+
 ##Example Setup
 
 You have four different headers (Simple, Jumbotron, Carousel, Cover). For each
@@ -99,7 +104,7 @@ If you are working in getResources/pdoResources, etc. and your TV is prefixed,
 use it like this:
 
 ```
-[[+tv.selectTV:getTVNames=`tv.`]]
+[[+tv.selectTV:getTVLabel=`tv.`]]
 ```
 
 ###getTVNames
