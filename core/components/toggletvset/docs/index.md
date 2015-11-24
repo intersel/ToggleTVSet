@@ -117,3 +117,13 @@ Example usage:
 ```
 &includeTVs=`[[*selectTV:getTVNames]]`
 ```
+
+## System Settings
+
+ToggleTVSet uses the following system settings in the namespace `toggletvset`:
+
+Key | Description | Default
+----|-------------|--------
+toggletvset.toggletvs | Comma separated list of template variable ids that should toggle the visibility of other template variables. | -
+toggletvset.toggletvs_clearhidden | Clear template variables that are hidden by ToggleTVSet. | No
+toggletvset.debug | Log debug informations in the MODX ystem log. | No

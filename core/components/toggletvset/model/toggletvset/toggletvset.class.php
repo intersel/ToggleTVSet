@@ -116,8 +116,8 @@ class ToggleTVSet
             }
         }
 
-        $this->options['hideTVs'] = $hidetvs;
-        $this->options['showTVs'] = $showtvs;
+        $this->options['hidetvs'] = $hidetvs;
+        $this->options['showtvs'] = $showtvs;
 
         $this->modx->lexicon->load($this->namespace . ':default');
     }
@@ -154,9 +154,10 @@ class ToggleTVSet
         $this->modx->regClientStartupHTMLBlock('<script type="text/javascript">' .
             'var ToggleTVSet = {"options": ' . json_encode(array(
                 'debug' => $this->getOption('debug'),
-                'toggletvs' => $this->getOption('toggletvs'),
-                'hideTVs' => $this->getOption('hideTVs'),
-                'showTVs' => $this->getOption('showTVs')
+                'toggleTVs' => $this->getOption('toggletvs'),
+                'toggleTVsClearHidden' => $this->getOption('toggletvs_clearhidden'),
+                'hideTVs' => $this->getOption('hidetvs'),
+                'showTVs' => $this->getOption('showtvs')
             )) . '};' . '</script>');
         $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.js?v=v' . $this->version);
     }

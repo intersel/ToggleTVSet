@@ -3,7 +3,7 @@
   "lowCaseName": "toggletvset",
   "description": "Toggle the visibility of template variables sets by the value of a template variable",
   "author": "pepebe/Jako",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "package": {
     "elements": {
       "plugins": [
@@ -39,6 +39,12 @@
         "key": "toggletvs",
         "area": "site",
         "value": ""
+      },
+      {
+        "key": "toggletvs_clearhidden",
+        "area": "site",
+        "type": "combo-boolean",
+        "value": "0"
       }
     ]
   },
