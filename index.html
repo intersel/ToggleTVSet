@@ -104,6 +104,8 @@
         
             <li><a href="#output-filter">Output Filter</a></li>
         
+            <li><a href="#system-settings">System Settings</a></li>
+        
     
     </ul>
 </div></div>
@@ -196,7 +198,36 @@ use it like this:</p>
 the TV names of the corresponding TV value with it.</p>
 <p>Example usage:</p>
 <pre><code>&amp;includeTVs=`[[*selectTV:getTVNames]]`
-</code></pre></div>
+</code></pre>
+
+<h2 id="system-settings">System Settings</h2>
+<p>ToggleTVSet uses the following system settings in the namespace <code>toggletvset</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>toggletvset.toggletvs</td>
+<td>Comma separated list of template variable ids that should toggle the visibility of other template variables.</td>
+<td>-</td>
+</tr>
+<tr>
+<td>toggletvset.toggletvs_clearhidden</td>
+<td>Clear template variables that are hidden by ToggleTVSet.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>toggletvset.debug</td>
+<td>Log debug informations in the MODX ystem log.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></div>
         </div>
 
         <footer class="col-md-12">
