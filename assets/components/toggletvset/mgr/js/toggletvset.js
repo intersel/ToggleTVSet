@@ -65,17 +65,21 @@ Ext.onReady(function () {
 
     ToggleTVSet.options.resourcePanel = Ext.getCmp('modx-panel-resource');
     ToggleTVSet.options.resourceForm = ToggleTVSet.options.resourcePanel.getForm();
+    ToggleTVSet.options.initialized = false;
 
     ToggleTVSet.options.resourcePanel.on('afterlayout', function () {
 
         Ext.each(ToggleTVSet.options.toggleTVs, function (toggleTV) {
-            ToggleTVSet.toggleTVSets(ToggleTVSet.options, true);
+            if (!ToggleTVSet.options.initialized) {
+                ToggleTVSet.toggleTVSets(ToggleTVSet.options, true);
 
-            var field = ToggleTVSet.options.resourceForm.findField('tv' + toggleTV);
-            if (field) {
-                field.on('select', function () {
-                    ToggleTVSet.toggleTVSets(this, false);
-                });
+                var field = ToggleTVSet.options.resourceForm.findField('tv' + toggleTV);
+                if (field) {
+                    field.on('select', function () {
+                        ToggleTVSet.toggleTVSets(this, false);
+                    });
+                }
+                ToggleTVSet.options.initialized = true;
             }
         });
     });

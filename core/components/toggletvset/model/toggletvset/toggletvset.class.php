@@ -27,7 +27,7 @@ class ToggleTVSet
      * The version
      * @var string $version
      */
-    public $version = '1.1.0';
+    public $version = '1.2.1';
 
     /**
      * The class options
@@ -147,6 +147,34 @@ class ToggleTVSet
     }
 
     /**
+     * Gets a context-aware setting through $this->getOption, and casts the value to a true boolean automatically,
+     * including strings "false" and "no" which are sometimes set that way by ExtJS.
+     *
+     * @param string $name
+     * @param array $options
+     * @param bool $default
+     * @return bool
+     */
+    public function getBooleanOption($name, array $options = null, $default = null) {
+        $option = $this->getOption($name, $options, $default);
+        return $this->castValueToBool($option);
+    }
+    /**
+     * Turns a value into a boolean. This checks for "false" and "no" strings, as well as anything PHP can automatically
+     * cast to a boolean value.
+     *
+     * @param $value
+     * @return bool
+     */
+    public function castValueToBool($value)
+    {
+        if (in_array(strtolower($value), array('false', 'no'))) {
+            return false;
+        }
+        return (bool)$value;
+    }
+
+    /**
      * Register the client scripts
      */
     public function regClientScripts()
@@ -155,10 +183,14 @@ class ToggleTVSet
             'var ToggleTVSet = {"options": ' . json_encode(array(
                 'debug' => $this->getOption('debug'),
                 'toggleTVs' => $this->getOption('toggletvs'),
-                'toggleTVsClearHidden' => $this->getOption('toggletvs_clearhidden'),
+                'toggleTVsClearHidden' => $this->getBooleanOption('toggletvs_clearhidden'),
                 'hideTVs' => $this->getOption('hidetvs'),
                 'showTVs' => $this->getOption('showtvs')
             )) . '};' . '</script>');
-        $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.js?v=v' . $this->version);
+        if ($this->options['debug'] && strpos($this->options['assetsUrl'], 'develop/toggletvset/') !== false) {
+            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.js?v=v' . $this->version);
+        } else {
+            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.min.js?v=v' . $this->version);
+        }
     }
 }
