@@ -1,9 +1,11 @@
-Changelog
-=========
+Changelog for ToggleTVSet
+=========================
 
+- 1.2.2
+    - Fixing toggling more than one set
 - 1.2.1
-    - Fixing wrong visibility state shown after resource save.
-    - Compressed javascript.
+    - Fixing wrong visibility state shown after resource save
+    - Compressed javascript
 - 1.2.0
     - Clear hidden TVs on toggle
 

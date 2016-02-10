@@ -69,8 +69,8 @@ Ext.onReady(function () {
 
     ToggleTVSet.options.resourcePanel.on('afterlayout', function () {
 
-        Ext.each(ToggleTVSet.options.toggleTVs, function (toggleTV) {
-            if (!ToggleTVSet.options.initialized) {
+        if (!ToggleTVSet.options.initialized) {
+            Ext.each(ToggleTVSet.options.toggleTVs, function (toggleTV) {
                 ToggleTVSet.toggleTVSets(ToggleTVSet.options, true);
 
                 var field = ToggleTVSet.options.resourceForm.findField('tv' + toggleTV);
@@ -79,8 +79,8 @@ Ext.onReady(function () {
                         ToggleTVSet.toggleTVSets(this, false);
                     });
                 }
-                ToggleTVSet.options.initialized = true;
-            }
-        });
+            });
+        }
+        ToggleTVSet.options.initialized = true;
     });
 });
