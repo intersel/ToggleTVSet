@@ -3,6 +3,7 @@ Changelog for ToggleTVSet
 
 - 1.2.3
     - Fixing javascript issues with not valid hide/show tv values
+    - Fixing issue with the getTVLabel output filter and not found placeholder name
     - Fixing issue with the getTVNames output filter and not found TV ID
 - 1.2.2
     - Fixing toggling more than one set
