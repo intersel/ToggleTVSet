@@ -27,7 +27,7 @@ class ToggleTVSet
      * The version
      * @var string $version
      */
-    public $version = '1.2.1';
+    public $version = '1.2.3';
 
     /**
      * The class options
@@ -95,7 +95,7 @@ class ToggleTVSet
                         $hidetvs = array_merge($hidetvs, array_map('trim', explode(',', $element[1])));
                     }
                 }
-                $hidetvs = array_unique($hidetvs);
+                $hidetvs = array_values(array_unique($hidetvs));
                 if ($this->modx->resource) {
                     $tvr = $modx->getObject('modTemplateVarResource', array(
                         'tmplvarid' => $toggletv,
@@ -103,8 +103,7 @@ class ToggleTVSet
                     ));
                     if ($tvr) {
                         $tvvalue = $tvr->get('value');
-                    }
-                    else {
+                    } else {
                         $tv = $modx->getObject('modTemplateVar', $toggletv);
                         $tvvalue = ($tv) ? $tv->get('default_text') : '';
                     }
@@ -112,7 +111,7 @@ class ToggleTVSet
                         $showtvs = array_merge($showtvs, array_map('trim', explode(',', $tvvalue)));
                     }
                 }
-                $showtvs = array_unique($showtvs);
+                $showtvs = array_values(array_unique($showtvs));
             }
         }
 
@@ -155,10 +154,12 @@ class ToggleTVSet
      * @param bool $default
      * @return bool
      */
-    public function getBooleanOption($name, array $options = null, $default = null) {
+    public function getBooleanOption($name, array $options = null, $default = null)
+    {
         $option = $this->getOption($name, $options, $default);
         return $this->castValueToBool($option);
     }
+
     /**
      * Turns a value into a boolean. This checks for "false" and "no" strings, as well as anything PHP can automatically
      * cast to a boolean value.

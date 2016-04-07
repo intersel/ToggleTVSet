@@ -1,6 +1,8 @@
 Changelog for ToggleTVSet
 =========================
 
+- 1.2.3
+    - Fixing javascript issues with not valid hide/show tv values
 - 1.2.2
     - Fixing toggling more than one set
 - 1.2.1
