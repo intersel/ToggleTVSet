@@ -14,7 +14,9 @@ $tvIds = explode(',', $input);
 $tvNames = array();
 foreach ($tvIds as $tvId) {
     $tv = $modx->getObject('modTemplateVar', $tvId);
-    $tvNames[] = $tv->get('name');
+    if (!empty($tv)) {
+        $tvNames[] = $tv->get('name');
+    }
 }
 
 return implode(',', $tvNames);
