@@ -12,8 +12,7 @@
 $name = (!empty($options)) ? str_replace($options, '', $name) : $name;
 $tv = $modx->getObject('modTemplateVar', array('name' => $name));
 
-$elements = $tv->get('elements');
-$elements = (!empty($element)) ? explode('||', $elements) : array();
+$elements = (!empty($tv)) ? explode('||', $tv->get('elements')) : array();
 
 $output = '';
 foreach ($elements as $key => $element) {
