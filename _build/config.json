@@ -31,7 +31,7 @@
     "systemSettings": [
       {
         "key": "debug",
-        "area": "site",
+        "area": "system",
         "type": "combo-boolean",
         "value": "0"
       },
