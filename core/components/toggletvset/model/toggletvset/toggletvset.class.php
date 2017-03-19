@@ -116,7 +116,7 @@ class ToggleTVSet
                 $showtvs = array_values(array_unique($showtvs));
             }
             else {
-                unset($this->options['toggletvs'][$key]);
+               // unset($this->options['toggletvs'][$key]);
             }
         }
 
