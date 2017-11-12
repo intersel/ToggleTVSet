@@ -46,17 +46,25 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            scripts: {
-                files: ['assets/components/toggletvset/mgr/js/**/*.js'],
+            js: {
+                files: [
+                    'assets/components/toggletvset/mgr/js/**/*.js'
+                ],
                 tasks: ['uglify', 'usebanner', 'sftp']
+            },
+            config: {
+                files: [
+                    '_build/config.json'
+                ],
+                tasks: ['default']
             }
         }
     });
 
     //load the packages
+    grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-ssh');
 
     //register the task
