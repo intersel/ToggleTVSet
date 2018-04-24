@@ -5,9 +5,7 @@ variable.
 
 ## Features
 
-See this [Movie](https://github.com/Jako/ToggleTVSet/blob/master/docs/introduction.mp4?raw=true) for a short 
+See this [Movie](https://cdn.rawgit.com/Jako/ToggleTVSet/607c7004/docs/introduction.mp4) for a short 
 introduction.
-
-<video src="https://github.com/Jako/ToggleTVSet/blob/master/docs/introduction.mp4?raw=true"></video>
 
 For more information please read [documentation](http://jako.github.io/ToggleTVSet/).
