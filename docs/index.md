@@ -1,16 +1,16 @@
-#ToggleTVSet
+# ToggleTVSet
 
 Toggle the visibility of template variables sets by the value of a template
 variable.
 
-##Features
+## Features
 
 See this [Movie](https://github.com/Jako/ToggleTVSet/raw/docs/introduction.mp4) for a short 
 introduction.
 
 <video src="https://github.com/Jako/ToggleTVSet/raw/docs/introduction.mp4"></video>
 
-##Use Cases
+## Use Cases
 
 In one of your templates you want to be able to select one of four different
 headers. Each type of header needs one or more TVs but you only want to show
@@ -22,37 +22,37 @@ templates and hide them by the default value of a toggling TV. This could cause
 speed problems in the frontend because the template variable handling is not 
 that effective i.e. in the getResources snippet.
 
-##Example Setup
+## Example Setup
 
 You have four different headers (Simple, Jumbotron, Carousel, Cover). For each
 one of them you use different TVs.
 
-###Step 1 - Install ToggleTVSet
+### Step 1 - Install ToggleTVSet
  
 Locate and install the extra package with the MODX package manager.
 
-###Step 2 - Create your header TVs
+### Step 2 - Create your header TVs
 
-####Simple Header TV
+#### Simple Header TV
 
 * Header_Headline (6) - a simple Text TV
 
-####Jumbotron TVs
+#### Jumbotron TVs
 
 * Jumbotron_Background_Color (7) - Colorpicker TV
 * Jumbotron_Background_Image (8) - Image TV
 * Jumbotron_RTE (9) - Richtext TV
 
-####Carousel TVs
+#### Carousel TVs
 
 * Carousel_Gallery (10) - MIGX TV
 
-####Cover TVs
+#### Cover TVs
 
 * Cover_Background_Image (11) - Image TV
 * Cover_RTE (12) - Richtext TV
 
-####Header Select TV
+#### Header Select TV
 
 Header (13) - Single Select TV
 
@@ -71,7 +71,7 @@ Bad: "Standard==6||Jumbotron== 7 , 8, 9 ||Carousel==10||Cover==11,12"
 Good: "Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12"
 ```
 
-###Step 3 - Fill the MODX system setting
+### Step 3 - Fill the MODX system setting
 
 Locate the `toggletvset.toggletvs` MODX system setting and fill it with the ID
 of the Header Select TV.
@@ -79,9 +79,9 @@ of the Header Select TV.
 ** Note **: The ID numbers of the template variables in the example ar just for
 demonstation and should be different in your installation.
 
-##Output Filter
+## Output Filter
 
-###getTVLabel
+### getTVLabel
 
 This output filter retrieves the label of a corresponding TV value.
 
@@ -107,7 +107,7 @@ use it like this:
 [[+tv.selectTV:getTVLabel=`tv.`]]
 ```
 
-###getTVNames
+### getTVNames
 
 This output filter retrieve names of TVs from a list of TV ids. You could get
 the TV names of the corresponding TV value with it.

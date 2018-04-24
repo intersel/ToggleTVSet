@@ -85,7 +85,10 @@ class ToggleTVSet
             $toggletv = intval($toggletv);
             $tv = $this->modx->getObject('modTemplateVar', $toggletv);
 
-            $hasTV = $modx->getCount('modTemplateVarTemplate', array('templateid' => $this->modx->resource->get('template'), 'tmplvarid' => $toggletv));
+            $hasTV = $modx->getCount('modTemplateVarTemplate', array(
+                'templateid' => $this->modx->resource->get('template'),
+                'tmplvarid' => $toggletv
+            ));
 
             if ($tv && $hasTV > 0) {
                 $elements = $tv->get('elements');
@@ -114,9 +117,6 @@ class ToggleTVSet
                     }
                 }
                 $showtvs = array_values(array_unique($showtvs));
-            }
-            else {
-               // unset($this->options['toggletvs'][$key]);
             }
         }
 
