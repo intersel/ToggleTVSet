@@ -5,10 +5,10 @@ variable.
 
 ##Features
 
-See this [quickcast](http://quick.as/dvdkfjwo) for a short 
+See this [Movie](https://github.com/Jako/ToggleTVSet/raw/docs/introduction.mp4) for a short 
 introduction.
 
-<iframe name="quickcast" src="http://quick.as/embed/dvdkfjwo" scrolling="no" frameborder="0" width="100%" allowfullscreen></iframe><script src="http://quick.as/embed/script/1.57"></script>
+<video src="https://github.com/Jako/ToggleTVSet/raw/docs/introduction.mp4"></video>
 
 ##Use Cases
 
