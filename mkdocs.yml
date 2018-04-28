@@ -56,3 +56,4 @@ markdown_extensions:
   - admonition
   - meta
   - toc(permalink=true)
+  - pymdownx.superfences

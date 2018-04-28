@@ -49,12 +49,13 @@ Header (13) - Single Select TV
 Give each input option a label and add the ids of the TVs used as comma
 separated values.
 
-** Note:**  Be careful not to add empty spaces inside the value!
-
-```
-Bad: "Standard==6||Jumbotron== 7 , 8, 9 ||Carousel==10||Cover==11,12"
-Good: "Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12"
-```
+!!! note
+    Be careful not to add empty spaces inside the value!
+    
+    ```
+    Bad: "Standard==6||Jumbotron== 7 , 8, 9 ||Carousel==10||Cover==11,12"
+    Good: "Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12"
+    ```
 
 ### Step 2 - Fill the MODX system setting
 
