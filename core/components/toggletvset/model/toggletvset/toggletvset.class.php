@@ -3,8 +3,11 @@
 /**
  * Main Class for ToggleTVSet
  *
+ * Copyright 2015 by Patrick Percy Blank <info@pepebe.de>
+ * Copyright 2015-2018 by Thomas Jakobi <thomas.jakobi@partout.info>
+ *
  * @package toggletvset
- * @subpackage class
+ * @subpackage classfile
  *
  * @author info@pepebe.de,
  * @author thomas.jakobi@partout.info
@@ -27,7 +30,7 @@ class ToggleTVSet
      * The version
      * @var string $version
      */
-    public $version = '1.2.3';
+    public $version = '1.3.0';
 
     /**
      * The class options
@@ -85,12 +88,7 @@ class ToggleTVSet
             $toggletv = intval($toggletv);
             $tv = $this->modx->getObject('modTemplateVar', $toggletv);
 
-            $hasTV = $modx->getCount('modTemplateVarTemplate', array(
-                'templateid' => $this->modx->resource->get('template'),
-                'tmplvarid' => $toggletv
-            ));
-
-            if ($tv && $hasTV > 0) {
+            if ($tv) {
                 $elements = $tv->get('elements');
                 $elements = explode('||', $elements);
 

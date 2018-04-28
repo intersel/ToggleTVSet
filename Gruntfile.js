@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         ' * Build date: <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         ' */\n',
         usebanner: {
-            dist: {
+            js: {
                 options: {
                     position: 'top',
                     banner: '<%= banner %>'
@@ -58,6 +58,44 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['default']
             }
+        },
+        bump: {
+            copyright: {
+                files: [{
+                    src: 'core/components/toggletvset/model/toggletvset/toggletvset.class.php',
+                    dest: 'core/components/toggletvset/model/toggletvset/toggletvset.class.php'
+                }],
+                options: {
+                    replacements: [{
+                        pattern: /Copyright \d{4}-\d{4}? by/g,
+                        replacement: 'Copyright ' + (new Date().getFullYear() > 2015 ? '2015-' : '') + new Date().getFullYear() + ' by'
+                    }]
+                }
+            },
+            version: {
+                files: [{
+                    src: 'core/components/toggletvset/model/toggletvset/toggletvset.class.php',
+                    dest: 'core/components/toggletvset/model/toggletvset/toggletvset.class.php'
+                }],
+                options: {
+                    replacements: [{
+                        pattern: /version = '\d+.\d+.\d+[-a-z0-9]*'/ig,
+                        replacement: 'version = \'' + '<%= modx.version %>' + '\''
+                    }]
+                }
+            },
+            docs: {
+                files: [{
+                    src: 'mkdocs.yml',
+                    dest: 'mkdocs.yml'
+                }],
+                options: {
+                    replacements: [{
+                        pattern: /&copy; \d{4}(-\d{4})?/g,
+                        replacement: '&copy; ' + (new Date().getFullYear() > 2015 ? '2015-' : '') + new Date().getFullYear()
+                    }]
+                }
+            }
         }
     });
 
@@ -66,7 +104,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-ssh');
+    grunt.loadNpmTasks('grunt-string-replace');
+    grunt.renameTask('string-replace', 'bump');
 
     //register the task
-    grunt.registerTask('default', ['uglify', 'usebanner', 'sftp']);
+    grunt.registerTask('default', ['bump', 'uglify', 'usebanner', 'sftp']);
 };
