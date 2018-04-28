@@ -606,11 +606,13 @@ one of them you use different TVs.</p>
 </ul>
 <p>Give each input option a label and add the ids of the TVs used as comma
 separated values.</p>
-<p><strong> Note:</strong>  Be careful not to add empty spaces inside the value!</p>
-<pre><code>Bad: &quot;Standard==6||Jumbotron== 7 , 8, 9 ||Carousel==10||Cover==11,12&quot;
-Good: &quot;Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12&quot;
-</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be careful not to add empty spaces inside the value!</p>
+<pre class="highlight"><code>Bad: &quot;Standard==6||Jumbotron== 7 , 8, 9 ||Carousel==10||Cover==11,12&quot;
+Good: &quot;Standard==6||Jumbotron==7,8,9||Carousel==10||Cover==11,12&quot;</code></pre>
 
+</div>
 <h3 id="step-2-fill-the-modx-system-setting">Step 2 - Fill the MODX system setting<a class="headerlink" href="#step-2-fill-the-modx-system-setting" title="Permanent link">&para;</a></h3>
 <p>Locate the <code>toggletvset.toggletvs</code> MODX system setting and fill it with the ID
 of the Header Select TV.</p>
@@ -623,26 +625,22 @@ demonstation and should be different in your installation.</p>
 <h3 id="gettvlabel">getTVLabel<a class="headerlink" href="#gettvlabel" title="Permanent link">&para;</a></h3>
 <p>This output filter retrieves the label of a corresponding TV value.</p>
 <p>If you have a selectTV with these input options</p>
-<pre><code>Standard==4||Carousel==8||Cover==9,10||Jumbotron==5,6,7
-</code></pre>
+<pre class="highlight"><code>Standard==4||Carousel==8||Cover==9,10||Jumbotron==5,6,7</code></pre>
 
 <p>you could use the following call i.e. in the template</p>
-<pre><code>[[$[[*selectTV:getTVLabel]]]]
-</code></pre>
+<pre class="highlight"><code>[[$[[*selectTV:getTVLabel]]]]</code></pre>
 
 <p>This will be replaced by the MODX parser to i.e.
 <code>[[$Standard]]</code> if the value of <code>[[*selectTV]]</code> is <code>4</code>.</p>
 <p>If you are working in getResources/pdoResources, etc. and your TV is prefixed, 
 use it like this:</p>
-<pre><code>[[+tv.selectTV:getTVLabel=`tv.`]]
-</code></pre>
+<pre class="highlight"><code>[[+tv.selectTV:getTVLabel=`tv.`]]</code></pre>
 
 <h3 id="gettvnames">getTVNames<a class="headerlink" href="#gettvnames" title="Permanent link">&para;</a></h3>
 <p>This output filter retrieve names of TVs from a list of TV ids. You could get
 the TV names of the corresponding TV value with it.</p>
 <p>Example usage:</p>
-<pre><code>&amp;includeTVs=`[[*selectTV:getTVNames]]`
-</code></pre>
+<pre class="highlight"><code>&amp;includeTVs=`[[*selectTV:getTVNames]]`</code></pre>
 
 <h2 id="system-settings">System Settings<a class="headerlink" href="#system-settings" title="Permanent link">&para;</a></h2>
 <p>ToggleTVSet uses the following system settings in the namespace <code>toggletvset</code>:</p>
