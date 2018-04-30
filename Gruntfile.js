@@ -22,7 +22,7 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
-            toggletvset: {
+            mgr: {
                 src: [
                     'assets/components/toggletvset/mgr/js/toggletvset.js'
                 ],
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
                 files: [
                     'assets/components/toggletvset/mgr/js/**/*.js'
                 ],
-                tasks: ['uglify', 'usebanner', 'sftp']
+                tasks: ['uglify', 'usebanner', 'sftp:js']
             },
             config: {
                 files: [
