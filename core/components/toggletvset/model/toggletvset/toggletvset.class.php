@@ -30,7 +30,7 @@ class ToggleTVSet
      * The version
      * @var string $version
      */
-    public $version = '1.3.0';
+    public $version = '1.2.4';
 
     /**
      * The class options
@@ -192,9 +192,9 @@ class ToggleTVSet
                 'showTVs' => $this->getOption('showtvs')
             )) . '};' . '</script>');
         if ($this->options['debug'] && strpos($this->options['assetsUrl'], 'develop/toggletvset/') !== false) {
-            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.js?v=v' . $this->version);
+            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'js/mgr/toggletvset.js?v=v' . $this->version);
         } else {
-            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'mgr/js/toggletvset.min.js?v=v' . $this->version);
+            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'js/mgr/toggletvset.min.js?v=v' . $this->version);
         }
     }
 }

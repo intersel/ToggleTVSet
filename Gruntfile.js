@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     src: [
-                        'assets/components/toggletvset/mgr/js/toggletvset.min.js'
+                        'assets/components/toggletvset/js/mgr/toggletvset.min.js'
                     ]
                 }
             }
@@ -24,15 +24,15 @@ module.exports = function (grunt) {
         uglify: {
             mgr: {
                 src: [
-                    'assets/components/toggletvset/mgr/js/toggletvset.js'
+                    'source/js/mgr/toggletvset.js'
                 ],
-                dest: 'assets/components/toggletvset/mgr/js/toggletvset.min.js'
+                dest: 'assets/components/toggletvset/js/mgr/toggletvset.min.js'
             }
         },
         sftp: {
             js: {
                 files: {
-                    "./": ['assets/components/toggletvset/mgr/js/toggletvset.min.js']
+                    "./": ['assets/components/toggletvset/js/mgr/toggletvset.min.js']
                 },
                 options: {
                     path: '<%= sshconfig.hostpath %>develop/toggletvset/',
@@ -48,9 +48,9 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: [
-                    'assets/components/toggletvset/mgr/js/**/*.js'
+                    'source/**/*.js'
                 ],
-                tasks: ['uglify', 'usebanner', 'sftp:js']
+                tasks: ['uglify', 'usebanner:js', 'sftp:js']
             },
             config: {
                 files: [
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
                 }],
                 options: {
                     replacements: [{
-                        pattern: /Copyright \d{4}-\d{4}? by/g,
+                        pattern: /Copyright 2015-\d{4}? by/g,
                         replacement: 'Copyright ' + (new Date().getFullYear() > 2015 ? '2015-' : '') + new Date().getFullYear() + ' by'
                     }]
                 }

@@ -1,6 +1,8 @@
 Changelog for ToggleTVSet
 =========================
 
+- 1.2.4
+    - Refactored/Standardized code
 - 1.2.3
     - Fixing javascript issues with not valid hide/show tv values
     - Fixing issue with the getTVLabel output filter and not found placeholder name
