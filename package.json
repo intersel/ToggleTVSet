@@ -1,6 +1,8 @@
 {
-  "name": "ToggleTVSet",
+  "name": "toggletvset",
   "description": "Toggle the visibility of template variables sets by the value of a template variable",
+  "author": "Thomas Jakobi <thomas.jakobi@partout.info>",
+  "private": true,
   "devDependencies": {
     "grunt": "^1.0.4",
     "grunt-banner": "^0.6.0",
