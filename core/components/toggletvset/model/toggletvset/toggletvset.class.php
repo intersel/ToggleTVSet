@@ -1,16 +1,16 @@
 <?php
-
 /**
- * Main Class for ToggleTVSet
+ * ToggleTVSet
  *
  * Copyright 2015 by Patrick Percy Blank <info@pepebe.de>
- * Copyright 2015-2018 by Thomas Jakobi <thomas.jakobi@partout.info>
+ * Copyright 2015-2019 by Thomas Jakobi <thomas.jakobi@partout.info>
  *
  * @package toggletvset
  * @subpackage classfile
- *
- * @author info@pepebe.de,
- * @author thomas.jakobi@partout.info
+ */
+
+/**
+ * Class ToggleTVSet
  */
 class ToggleTVSet
 {
@@ -27,10 +27,16 @@ class ToggleTVSet
     public $namespace = 'toggletvset';
 
     /**
+     * The package name
+     * @var string $packageName
+     */
+    public $packageName = 'ToggleTVSet';
+
+    /**
      * The version
      * @var string $version
      */
-    public $version = '1.2.4';
+    public $version = '1.2.5';
 
     /**
      * The class options
@@ -44,9 +50,10 @@ class ToggleTVSet
      * @param modX $modx A reference to the modX instance.
      * @param array $options An array of options. Optional.
      */
-    function __construct(modX &$modx, $options = array())
+    public function __construct(modX &$modx, $options = array())
     {
         $this->modx = &$modx;
+        $this->namespace = $this->getOption('namespace', $options, $this->namespace);
 
         $corePath = $this->getOption('core_path', $options, $this->modx->getOption('core_path') . 'components/' . $this->namespace . '/');
         $assetsPath = $this->getOption('assets_path', $options, $this->modx->getOption('assets_path') . 'components/' . $this->namespace . '/');
@@ -56,11 +63,6 @@ class ToggleTVSet
         $this->options = array_merge(array(
             'namespace' => $this->namespace,
             'version' => $this->version,
-            'assetsPath' => $assetsPath,
-            'assetsUrl' => $assetsUrl,
-            'cssUrl' => $assetsUrl . 'css/',
-            'jsUrl' => $assetsUrl . 'js/',
-            'imagesUrl' => $assetsUrl . 'images/',
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
             'vendorPath' => $corePath . 'vendor/',
@@ -71,10 +73,15 @@ class ToggleTVSet
             'controllersPath' => $corePath . 'controllers/',
             'processorsPath' => $corePath . 'processors/',
             'templatesPath' => $corePath . 'templates/',
-            'connectorUrl' => $assetsUrl . 'connector.php',
+            'assetsPath' => $assetsPath,
+            'assetsUrl' => $assetsUrl,
+            'jsUrl' => $assetsUrl . 'js/',
+            'cssUrl' => $assetsUrl . 'css/',
+            'imagesUrl' => $assetsUrl . 'images/',
+            'connectorUrl' => $assetsUrl . 'connector.php'
         ), $options);
 
-        // set default options
+        // Set default options
         $toggletvs = $this->getOption('toggletvs');
         $this->options = array_merge($this->options, array(
             'debug' => (boolean)$this->getOption('debug'),
@@ -179,22 +186,26 @@ class ToggleTVSet
     }
 
     /**
-     * Register the client scripts
+     * Register javascripts in the controller
      */
-    public function regClientScripts()
+    public function includeScriptAssets()
     {
-        $this->modx->regClientStartupHTMLBlock('<script type="text/javascript">' .
+        $assetsUrl = $this->getOption('assetsUrl');
+        $jsUrl = $this->getOption('jsUrl') . 'mgr/';
+        $jsSourceUrl = $assetsUrl . '../../../source/js/mgr/';
+
+        if ($this->getOption('debug') && $assetsUrl != MODX_ASSETS_URL . 'components/toggletvset/') {
+            $this->modx->controller->addLastJavascript($jsSourceUrl . 'toggletvset.js?v=v' . $this->version);
+        } else {
+            $this->modx->controller->addLastJavascript($jsUrl . 'toggletvset.min.js?v=v' . $this->version);
+        }
+        $this->modx->controller->addHtml('<script type="text/javascript">' .
             'var ToggleTVSet = {"options": ' . json_encode(array(
                 'debug' => $this->getOption('debug'),
                 'toggleTVs' => $this->getOption('toggletvs'),
                 'toggleTVsClearHidden' => $this->getBooleanOption('toggletvs_clearhidden'),
                 'hideTVs' => $this->getOption('hidetvs'),
                 'showTVs' => $this->getOption('showtvs')
-            )) . '};' . '</script>');
-        if ($this->options['debug'] && strpos($this->options['assetsUrl'], 'develop/toggletvset/') !== false) {
-            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'js/mgr/toggletvset.js?v=v' . $this->version);
-        } else {
-            $this->modx->regClientStartupScript($this->options['assetsUrl'] . 'js/mgr/toggletvset.min.js?v=v' . $this->version);
-        }
+            ), JSON_PRETTY_PRINT) . '};' . '</script>');
     }
 }

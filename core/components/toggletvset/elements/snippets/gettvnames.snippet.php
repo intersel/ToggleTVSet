@@ -1,12 +1,12 @@
 <?php
 /**
- * Output filter to retrieve names of TVs from a list of TV IDs.
+ * Output filter that retrieves the names of TVs from a list of TV IDs
  *
  * @package toggletvset
  * @subpackage snippet
  *
- * @author info@pepebe.de,
- * @author thomas.jakobi@partout.info
+ * @var modX $modx
+ * @var string $input
  */
 
 $tvIds = explode(',', $input);

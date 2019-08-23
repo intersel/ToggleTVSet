@@ -1,25 +1,25 @@
 <?php
 /**
- * toogleTVSet runtime hooks
+ * ToggleTVSet Runtime Hooks
  *
  * @package toggletvset
  * @subpackage plugin
  *
- * @event   OnDocFormPreRender
+ * @event OnDocFormPreRender
  *
- * @author info@pepebe.de,
- * @author thomas.jakobi@partout.info
+ * @var modX $modx
  */
 
-$corePath = $modx->getOption('toggletvset.core_path', null, $modx->getOption('core_path') . 'components/toggletvset/');
-$assetsUrl = $modx->getOption('toggletvset.assets_url', null, $modx->getOption('assets_url') . 'components/toggletvset/');
+$eventName = $modx->event->name;
 
+$corePath = $modx->getOption('toggletvset.core_path', null, $modx->getOption('core_path') . 'components/toggletvset/');
+/** @var ToggleTVSet $toggletvset */
 $toggletvset = $modx->getService('toggletvset', 'ToggleTVSet', $corePath . 'model/toggletvset/', array(
     'core_path' => $corePath
 ));
 
-switch ($modx->event->name) {
+switch ($eventName) {
     case 'OnDocFormPrerender':
-        $toggletvset->regClientScripts();
+        $toggletvset->includeScriptAssets();
         break;
 };

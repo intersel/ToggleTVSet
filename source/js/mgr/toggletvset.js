@@ -1,10 +1,3 @@
-/**
- * ToggleTVSet Init Script
- *
- * @package toggletvset
- * @subpackage init script
- */
-
 Ext.onReady(function () {
     // Show/Hide a set of template variables
     ToggleTVSet.toggleTVSet = function (tvs, show) {

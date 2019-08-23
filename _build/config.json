@@ -2,8 +2,8 @@
   "name": "ToggleTVSet",
   "lowCaseName": "toggletvset",
   "description": "Toggle the visibility of template variables sets by the value of a template variable",
-  "author": "pepebe/Jako",
-  "version": "1.2.4",
+  "author": "Patrick Percy Blank/Thomas Jakobi",
+  "version": "1.2.5",
   "package": {
     "elements": {
       "plugins": [
@@ -31,8 +31,8 @@
     "systemSettings": [
       {
         "key": "debug",
-        "area": "system",
         "type": "combo-boolean",
+        "area": "system",
         "value": "0"
       },
       {
@@ -42,15 +42,33 @@
       },
       {
         "key": "toggletvs_clearhidden",
-        "area": "site",
         "type": "combo-boolean",
+        "area": "site",
         "value": "0"
       }
     ]
   },
+  "dependencies": [
+    {
+      "name": "php",
+      "version": ">=5.4"
+    },
+    {
+      "name": "modx",
+      "version": ">=2.6"
+    }
+  ],
   "build": {
     "readme": "docs/readme.md",
     "license": "docs/license.md",
-    "changelog": "docs/changelog.md"
+    "changelog": "docs/changelog.md",
+    "setupOptions": {
+      "source": "setup.options.php"
+    },
+    "resolver": {
+      "after": [
+        "resolve.treehillstudio.php"
+      ]
+    }
   }
 }

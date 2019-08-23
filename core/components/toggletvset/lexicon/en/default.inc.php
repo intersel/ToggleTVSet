@@ -1,11 +1,10 @@
 <?php
 /**
- * Default English Lexicon Entries for ToggleTVSet
+ * Default Lexicon Entries for ToggleTVSet
  *
  * @package toggletvset
  * @subpackage lexicon
  */
-$_lang['toggletvset'] = 'ToggleTVSet';
 
 $_lang['setting_toggletvset.debug'] = 'Debug';
 $_lang['setting_toggletvset.debug_desc'] = 'Log debug informations in MODX error log.';
