@@ -25,8 +25,8 @@ Ext.onReady(function () {
             hideTVs = tv.hideTVs;
             showTVs = tv.showTVs;
         } else {
-            hideTVs = tv.store.data.keys.join().split(',');
-            showTVs = tv.getValue().split(',');
+            hideTVs = ToggleTVSet.options.hideTVs;//tv.store.data.keys.join().split(',');
+            showTVs = ToggleTVSet.options.showOptionTvs[tv.selectedIndex].split(',');//tv.getValue().split(',');
         }
 
         ToggleTVSet.toggleTVSet(hideTVs, 0);
@@ -77,3 +77,4 @@ Ext.onReady(function () {
         ToggleTVSet.options.initialized = true;
     });
 });
+
