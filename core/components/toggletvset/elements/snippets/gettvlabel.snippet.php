@@ -20,7 +20,21 @@ $output = '';
 foreach ($elements as $key => $element) {
     $element = explode('==', $element);
 
-    if ($element[1] == $input) {
+    $value = $element[1];
+    
+	if (strpos($value,'[[') !== false)
+	{
+		$uniqid = uniqid();
+		$chunk = $modx->newObject('modChunk', array('name' => "{tmp}-{$uniqid}"));
+		$chunk->setCacheable(false);
+		$value = $chunk->process(array(), $value);
+		$modx->getParser();
+		/*parse all non-cacheable tags and remove unprocessed tags - if you want to parse cacheable tags set 3 param as false*/
+		$modx->parser->processElementTags('', $value, true, true, '[[', ']]', array(), 0);
+	}
+
+
+    if ($value == $input) {
         $output = $element[0];
         break;
     }
