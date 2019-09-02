@@ -6,7 +6,7 @@
  * Copyright 2015-2019 by Thomas Jakobi <thomas.jakobi@partout.info>
  * Modifications:
  * - Emmanuel Podvin - Intersel - 20190901 -
- *      add modx parsing on the input options values of the Toggle TV 
+ *      add modx parsing on the input options values of the Toggle TV
  *      in order to prevent problem described in https://github.com/Jako/ToggleTVSet/issues/5
  *
  * @package toggletvset
@@ -47,6 +47,8 @@ class ToggleTVSet
      * @var array $options
      */
     public $options = array();
+
+		private $ready = false;
 
     /**
      * ToggleTVSet constructor
@@ -100,6 +102,19 @@ class ToggleTVSet
             $toggletv = intval($toggletv);
             $tv = $this->modx->getObject('modTemplateVar', $toggletv);
 
+						// Is our toggle tv is set for the template of our ressource?
+						$tvt = $this->modx->getObject('modTemplateVarTemplate', array(
+											'tmplvarid' => $toggletv,
+											'templateid' => $this->modx->resource->get('template')
+						));
+						if (empty($tvt))
+						{
+							continue;//the toggle TV is not in the template of the ressource => should do nothing...
+						}
+
+						$this->ready = true;//ok
+
+
             if ($tv) {
                 $elements = $tv->get('elements');
                 $elements = explode('||', $elements);
@@ -125,14 +140,15 @@ class ToggleTVSet
                 }
                 $hidetvs = array_values(array_unique($hidetvs));
                 if ($this->modx->resource) {
-                    $tvr = $modx->getObject('modTemplateVarResource', array(
+
+                    $tvr = $this->modx->getObject('modTemplateVarResource', array(
                         'tmplvarid' => $toggletv,
                         'contentid' => $this->modx->resource->get('id')
                     ));
                     if ($tvr) {
                         $tvvalue = $tvr->get('value');
                     } else {
-                        $tv = $modx->getObject('modTemplateVar', $toggletv);
+                        $tv = $this->modx->getObject('modTemplateVar', $toggletv);
                         $tvvalue = ($tv) ? $tv->get('default_text') : '';
                     }
                     if ($tvvalue) {
@@ -214,6 +230,15 @@ class ToggleTVSet
         }
         return (bool)$value;
     }
+
+/**
+ * returns if we can include the script...
+ * @return boolean if true it's ok to install the script
+ */
+		public function ready()
+		{
+			return $this->ready;
+		}
 
     /**
      * Register javascripts in the controller
