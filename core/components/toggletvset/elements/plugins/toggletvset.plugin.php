@@ -20,6 +20,8 @@ $toggletvset = $modx->getService('toggletvset', 'ToggleTVSet', $corePath . 'mode
 
 switch ($eventName) {
     case 'OnDocFormPrerender':
-        $toggletvset->includeScriptAssets();
+        if ($toggletvset->ready()) {
+            $toggletvset->includeScriptAssets();
+        }
         break;
 };
