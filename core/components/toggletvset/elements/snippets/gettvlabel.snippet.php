@@ -20,7 +20,7 @@ $output = '';
 foreach ($elements as $key => $element) {
     $element = explode('==', $element);
 
-    $value = $element[1];
+    $value = array_key_exists(1,$element) ? $element[1] : '';
     
 	if (strpos($value,'[[') !== false)
 	{
