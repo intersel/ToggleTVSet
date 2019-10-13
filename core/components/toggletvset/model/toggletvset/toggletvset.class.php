@@ -102,22 +102,38 @@ class ToggleTVSet
                 foreach ($elements as $element) {
                     $element = explode('==', $element);
                     if (isset($element[1])) {
+                        if (strpos($element[1], '[[') !== false) {
+                            /** @var modChunk $chunk */
+                            $chunk = $this->modx->newObject('modChunk', array('name' => "{tmp}-" . uniqid()));
+                            $chunk->setCacheable(false);
+                            $element[1] = $chunk->process(array(), $element[1]);
+                            $parser = $this->modx->getParser();
+                            $parser->processElementTags('', $element[1], true, true, '[[', ']]', array(), 0);
+                        }
                         $hidetvs = array_merge($hidetvs, array_map('trim', explode(',', $element[1])));
                     }
                 }
                 $hidetvs = array_values(array_unique($hidetvs));
                 if ($this->modx->resource) {
-                    $tvr = $modx->getObject('modTemplateVarResource', array(
+                    $tvr = $this->modx->getObject('modTemplateVarResource', array(
                         'tmplvarid' => $toggletv,
                         'contentid' => $this->modx->resource->get('id')
                     ));
                     if ($tvr) {
                         $tvvalue = $tvr->get('value');
                     } else {
-                        $tv = $modx->getObject('modTemplateVar', $toggletv);
+                        $tv = $this->modx->getObject('modTemplateVar', $toggletv);
                         $tvvalue = ($tv) ? $tv->get('default_text') : '';
                     }
                     if ($tvvalue) {
+                        if (strpos($tvvalue, '[[') !== false) {
+                            /** @var modChunk $chunk */
+                            $chunk = $this->modx->newObject('modChunk', array('name' => "{tmp}-" . uniqid()));
+                            $chunk->setCacheable(false);
+                            $tvvalue = $chunk->process(array(), $tvvalue);
+                            $parser = $this->modx->getParser();
+                            $parser->processElementTags('', $tvvalue, true, true, '[[', ']]', array(), 0);
+                        }
                         $showtvs = array_merge($showtvs, array_map('trim', explode(',', $tvvalue)));
                     }
                 }
@@ -200,12 +216,12 @@ class ToggleTVSet
             $this->modx->controller->addLastJavascript($jsUrl . 'toggletvset.min.js?v=v' . $this->version);
         }
         $this->modx->controller->addHtml('<script type="text/javascript">' .
-            'var ToggleTVSet = {"options": ' . json_encode(array(
+            'var ToggleTVSet = ' . json_encode(array('options' => array(
                 'debug' => $this->getOption('debug'),
                 'toggleTVs' => $this->getOption('toggletvs'),
                 'toggleTVsClearHidden' => $this->getBooleanOption('toggletvs_clearhidden'),
                 'hideTVs' => $this->getOption('hidetvs'),
-                'showTVs' => $this->getOption('showtvs')
-            ), JSON_PRETTY_PRINT) . '};' . '</script>');
+                'showTVs' => $this->getOption('showtvs'),
+            )), JSON_PRETTY_PRINT) . ';' . '</script>');
     }
 }

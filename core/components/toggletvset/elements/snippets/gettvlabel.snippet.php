@@ -20,7 +20,16 @@ $output = '';
 foreach ($elements as $key => $element) {
     $element = explode('==', $element);
 
-    if ($element[1] == $input) {
+    $value = isset($element[1]) ? $element[1] : '';
+    if (strpos($value, '[[') !== false) {
+        /** @var modChunk $chunk */
+        $chunk = $modx->newObject('modChunk', array('name' => '{tmp}-' . uniqid()));
+        $chunk->setCacheable(false);
+        $value = $chunk->process(array(), $value);
+        $parser = $modx->getParser();
+        $parser->processElementTags('', $value, true, true, '[[', ']]', array(), 0);
+    }
+    if ($value == $input) {
         $output = $element[0];
         break;
     }
