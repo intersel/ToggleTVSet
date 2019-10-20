@@ -36,7 +36,7 @@ class ToggleTVSet
      * The version
      * @var string $version
      */
-    public $version = '1.2.5';
+    public $version = '1.2.6';
 
     /**
      * The class options
