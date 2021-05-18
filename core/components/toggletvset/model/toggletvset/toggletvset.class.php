@@ -222,6 +222,6 @@ class ToggleTVSet
                 'toggleTVsClearHidden' => $this->getBooleanOption('toggletvs_clearhidden'),
                 'hideTVs' => $this->getOption('hidetvs'),
                 'showTVs' => $this->getOption('showtvs'),
-            )), JSON_PRETTY_PRINT) . ';' . '</script>');
+            )), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';' . '</script>');
     }
 }
