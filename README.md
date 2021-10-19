@@ -16,4 +16,4 @@ MODX Package Management
 
 ## Usage
 
-Install via package manager, create a TV and change the input & output type to 'ColorPicker'
+Install via package manager
