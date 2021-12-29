@@ -22,4 +22,4 @@ switch ($eventName) {
     case 'OnDocFormPrerender':
         $toggletvset->includeScriptAssets();
         break;
-};
+}
