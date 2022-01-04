@@ -18,15 +18,14 @@ Ext.onReady(function () {
     };
 
     // Toggle a set of template variables by the value of a TV
-    ToggleTVSet.toggleTVSets = function (tv, init) {
+    ToggleTVSet.toggleTVSets = function (tv, toggletvid, init) {
         var hideTVs, showTVs;
-
         if (init) {
-            hideTVs = tv.hideTVs;
-            showTVs = tv.showTVs;
+            hideTVs = tv.hideTVs[toggletvid];
+            showTVs = tv.showTVs[toggletvid];
         } else {
-            hideTVs = tv.store.data.keys.join().split(',');
-            showTVs = tv.getValue().split(',');
+            hideTVs = ToggleTVSet.options.hideTVs[toggletvid];//tv.store.data.keys.join().split(',');
+            showTVs = ToggleTVSet.options.showOptionTvs[toggletvid][tv.selectedIndex].split(',');//tv.getValue().split(',');
         }
 
         ToggleTVSet.toggleTVSet(hideTVs, 0);
@@ -61,15 +60,14 @@ Ext.onReady(function () {
     ToggleTVSet.options.initialized = false;
 
     ToggleTVSet.options.resourcePanel.on('afterlayout', function () {
-
         if (!ToggleTVSet.options.initialized) {
             Ext.each(ToggleTVSet.options.toggleTVs, function (toggleTV) {
-                ToggleTVSet.toggleTVSets(ToggleTVSet.options, true);
+                ToggleTVSet.toggleTVSets(ToggleTVSet.options, toggleTV ,true);
 
                 var field = ToggleTVSet.options.resourceForm.findField('tv' + toggleTV);
                 if (field) {
                     field.on('select', function () {
-                        ToggleTVSet.toggleTVSets(this, false);
+                        ToggleTVSet.toggleTVSets(this, toggleTV, false);
                     });
                 }
             });
