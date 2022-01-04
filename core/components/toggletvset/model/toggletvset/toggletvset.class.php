@@ -3,7 +3,13 @@
  * ToggleTVSet
  *
  * Copyright 2015 by Patrick Percy Blank <info@pepebe.de>
- * Copyright 2015-2019 by Thomas Jakobi <office@treehillstudio.com>
+ * Copyright 2015-2019 by Thomas Jakobi <thomas.jakobi@partout.info>
+ * Modifications:
+ * - Emmanuel Podvin - Intersel - 20190901 -
+ *      add modx parsing on the input options values of the Toggle TV
+ *      in order to prevent problem described in https://github.com/Jako/ToggleTVSet/issues/5
+ * - Emmanuel Podvin - Intersel - 20210104
+ *      Allow to have several toggleTVs in the same template/resource
  *
  * @package toggletvset
  * @subpackage classfile
@@ -43,6 +49,8 @@ class ToggleTVSet
      * @var array $options
      */
     public $options = array();
+
+		private $ready = false;
 
     /**
      * ToggleTVSet constructor
@@ -90,31 +98,59 @@ class ToggleTVSet
 
         $hidetvs = array();
         $showtvs = array();
+				$showOptionTvs = array();
+
+				if (empty($this->modx->resource)) {
+					return;
+				}
 
         foreach ($this->options['toggletvs'] as $toggletv) {
             $toggletv = intval($toggletv);
+            $hidetvs[$toggletv] = array();
+            $showtvs[$toggletv] = array();
+
             $tv = $this->modx->getObject('modTemplateVar', $toggletv);
+
+						// Is our toggle tv is set for the template of our ressource?
+						$tvt = $this->modx->getObject('modTemplateVarTemplate', array(
+											'tmplvarid' => $toggletv,
+											'templateid' => $this->modx->resource->get('template')
+						));
+						if (empty($tvt))
+						{
+							continue;//the toggle TV is not in the template of the ressource => should do nothing...
+						}
+
+						$this->ready = true;//ok
 
             if ($tv) {
                 $elements = $tv->get('elements');
                 $elements = explode('||', $elements);
 
                 foreach ($elements as $element) {
+		    						$tvlist="";
                     $element = explode('==', $element);
                     if (isset($element[1])) {
-                        if (strpos($element[1], '[[') !== false) {
-                            /** @var modChunk $chunk */
-                            $chunk = $this->modx->newObject('modChunk', array('name' => "{tmp}-" . uniqid()));
-                            $chunk->setCacheable(false);
-                            $element[1] = $chunk->process(array(), $element[1]);
-                            $parser = $this->modx->getParser();
-                            $parser->processElementTags('', $element[1], true, true, '[[', ']]', array(), 0);
-                        }
-                        $hidetvs = array_merge($hidetvs, array_map('trim', explode(',', $element[1])));
+												$tvlist = $element[1];
+												if (strpos($tvlist,'[[') !== false) //parse modx tags if any
+												{
+													$uniqid = uniqid();
+													$chunk = $this->modx->newObject('modChunk', array('name' => "{tmp}-{$uniqid}"));
+													$chunk->setCacheable(false);
+													$tvlist = $chunk->process(array(), $tvlist);
+													$this->modx->getParser();
+													/*parse all non-cacheable tags and remove unprocessed tags - if you want to parse cacheable tags set 3 param as false*/
+													$this->modx->parser->processElementTags('', $tvlist, true, true, '[[', ']]', array(), 0);
+												}
+                        if (!empty($tvlist))
+                          $hidetvs[$toggletv] = array_merge($hidetvs[$toggletv], array_map('trim', explode(',', $tvlist)));
                     }
+		    						$showOptionTvs[$toggletv][] = $tvlist;
                 }
-                $hidetvs = array_values(array_unique($hidetvs));
+                //$hidetvs = array_values(array_unique($hidetv));
+                $hidetvs[$toggletv] = array_values(array_unique($hidetvs[$toggletv]));
                 if ($this->modx->resource) {
+
                     $tvr = $this->modx->getObject('modTemplateVarResource', array(
                         'tmplvarid' => $toggletv,
                         'contentid' => $this->modx->resource->get('id')
@@ -126,23 +162,29 @@ class ToggleTVSet
                         $tvvalue = ($tv) ? $tv->get('default_text') : '';
                     }
                     if ($tvvalue) {
-                        if (strpos($tvvalue, '[[') !== false) {
-                            /** @var modChunk $chunk */
-                            $chunk = $this->modx->newObject('modChunk', array('name' => "{tmp}-" . uniqid()));
-                            $chunk->setCacheable(false);
-                            $tvvalue = $chunk->process(array(), $tvvalue);
-                            $parser = $this->modx->getParser();
-                            $parser->processElementTags('', $tvvalue, true, true, '[[', ']]', array(), 0);
+                        if (strpos($tvvalue, '[[') !== false)
+                        {
+                                $uniqid = uniqid();
+																/** @var modChunk $chunk */
+                                $chunk = $this->modx->newObject('modChunk', array('name' => "{tmp}-{$uniqid}"));
+                                $chunk->setCacheable(false);
+                                $tvvalue = $chunk->process(array(), $tvvalue);
+                                $parser = $this->modx->getParser();
+                                /*parse all non-cacheable tags and remove unprocessed tags - if you want to parse cacheable tags set 3 param as false*/
+                                $parser->processElementTags('', $tvvalue, true, true, '[[', ']]', array(), 0);
                         }
-                        $showtvs = array_merge($showtvs, array_map('trim', explode(',', $tvvalue)));
+
+                        $showtvs[$toggletv] = array_merge($showtvs[$toggletv], array_map('trim', explode(',', $tvvalue)));
                     }
                 }
-                $showtvs = array_values(array_unique($showtvs));
+                //$showtvs = array_values(array_unique($showtvs));
+                $showtvs[$toggletv] = array_values(array_unique($showtvs[$toggletv]));
             }
         }
 
         $this->options['hidetvs'] = $hidetvs;
         $this->options['showtvs'] = $showtvs;
+        $this->options['showOptionTvs'] = $showOptionTvs;
 
         $this->modx->lexicon->load($this->namespace . ':default');
     }
@@ -201,6 +243,15 @@ class ToggleTVSet
         return (bool)$value;
     }
 
+/**
+ * returns if we can include the script...
+ * @return boolean if true it's ok to install the script
+ */
+		public function ready()
+		{
+			return $this->ready;
+		}
+
     /**
      * Register javascripts in the controller
      */
@@ -213,15 +264,16 @@ class ToggleTVSet
         if ($this->getOption('debug') && $assetsUrl != MODX_ASSETS_URL . 'components/toggletvset/') {
             $this->modx->controller->addLastJavascript($jsSourceUrl . 'toggletvset.js?v=v' . $this->version);
         } else {
-            $this->modx->controller->addLastJavascript($jsUrl . 'toggletvset.min.js?v=v' . $this->version);
+            $this->modx->controller->addLastJavascript($jsUrl . 'toggletvset.js?v=v' . $this->version);
         }
-        $this->modx->controller->addHtml('<script type="text/javascript">' .
+				$this->modx->controller->addHtml('<script type="text/javascript">' .
             'var ToggleTVSet = ' . json_encode(array('options' => array(
                 'debug' => $this->getOption('debug'),
                 'toggleTVs' => $this->getOption('toggletvs'),
                 'toggleTVsClearHidden' => $this->getBooleanOption('toggletvs_clearhidden'),
                 'hideTVs' => $this->getOption('hidetvs'),
                 'showTVs' => $this->getOption('showtvs'),
+								'showOptionTvs' => $this->getOption('showOptionTvs')
             )), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';' . '</script>');
     }
 }
